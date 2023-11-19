@@ -2,15 +2,23 @@ hotelXplorer/appWeb/fastapi/virtual/
 
 hotelXplorer/appWeb/node/data/
 
+hotelXplorer/appWeb/node/node-modules/
+
 
 hotelXplorer/appWeb/fastapi/virtual
 
 hotelXplorer/appWeb/node/data
 
+hotelXplorer/appWeb/node/node-modules
+
 appWeb/fastapi/virtual/
 
 appWeb/node/data/
 
+appWeb/node/node-modules/
+
 appWeb/fastapi/virtual
 
 appWeb/node/data
+
+appWeb/node/node-modules

@@ -22,6 +22,7 @@ app.use(cors());
 
 
 
+
 // Conexión a la base de datos MongoDB
 mongoose.connect('mongodb://localhost/tubasededatos', {
   useNewUrlParser: true,

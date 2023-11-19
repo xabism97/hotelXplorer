@@ -11,6 +11,8 @@ const nodeServiceProxy = createProxyMiddleware({
   pathRewrite: { '^/node-service': '' }, // Reescribe las rutas si es necesario
 });
 
+
+
 // Configurar el proxy para el microservicio de Python (main.py)
 const pythonServiceProxy = createProxyMiddleware({
   target: 'http://localhost:8000', // Asume que este es el puerto donde se ejecuta tu microservicio Python
