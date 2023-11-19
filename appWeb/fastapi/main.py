@@ -248,12 +248,31 @@ async def get_reviews_by_hotel(hotel_id: int, db: Session = Depends(get_db)):
         raise HTTPException(status_code=404, detail="No reviews found for the specified hotel")
     return reviews
 
+# Ruta para obtener el perfil del usuario logueado
+@app.get("/users/me/data", response_model=UserInDB)
+async def read_users_me(current_user: User = Security(get_current_user)):
+    """
+    Retorna los datos del usuario actualmente logueado.
+    """
+    return current_user
+
 @app.get("/users/{user_id}/username", response_model=UserNameOut)
 async def get_username_by_user_id(user_id: int, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.id == user_id).first()
     if db_user is None:
         raise HTTPException(status_code=404, detail="User not found")
     return UserNameOut(username=db_user.username)
+
+
+
+# Asegúrate de que esta ruta esté después de la ruta '/users/me' para evitar conflictos
+@app.get("/users/{user_id}", response_model=UserInDB)
+async def read_user(user_id: int, db: Session = Depends(get_db)):
+    db_user = db.query(User).filter(User.id == user_id).first()
+    if db_user is None:
+        raise HTTPException(status_code=404, detail="User not found")
+    return db_user
+
 
 # Más rutas y lógica según tus requerimientos...
 
