@@ -8,11 +8,15 @@ const path = require('path');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs'); // Asegúrate de que este módulo esté instalado
 
+const cors = require('cors');
+
+
 
 const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+app.use(cors());
 
 
 
