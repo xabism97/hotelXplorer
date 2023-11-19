@@ -1,0 +1,223 @@
+openapi: 3.0.0
+info:
+  title: API de Hoteles
+  version: 1.0.0
+  description: API REST para gestionar datos de hoteles en Euskadi
+servers:
+  - url: http://localhost:3000
+paths:
+  /hotels/data-refresh:
+    get:
+      summary: Descargar y almacenar datos de hoteles
+      responses:
+        '200':
+          description: Datos de hoteles almacenados con éxito
+        '500':
+          description: Error en el servidor
+
+  /hotels:
+    get:
+      summary: Consultar y obtener datos de hoteles
+      responses:
+        '200':
+          description: Datos de hoteles obtenidos con éxito
+        '500':
+          description: Error en el servidor
+
+  /hotels/by-municipality/{municipioCodigo}:
+    get:
+      summary: Consultar hoteles por el código de municipio
+      parameters:
+        - in: path
+          name: municipioCodigo
+          required: true
+          description: Código del municipio para filtrar hoteles
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Hoteles encontrados por código de municipio
+        '404':
+          description: No se encontraron hoteles para el código de municipio especificado
+        '500':
+          description: Error en el servidor
+
+  /hotels/{hotelId}/details:
+    get:
+      summary: Consultar un hotel por su ID
+      parameters:
+        - in: path
+          name: hotelId
+          required: true
+          description: ID del hotel que se desea consultar
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Datos del hotel obtenidos con éxito
+        '404':
+          description: Hotel no encontrado
+        '500':
+          description: Error en el servidor
+
+  /hotels/by-territory/{territorioCodigo}:
+    get:
+      summary: Consultar hoteles por el código de territorio
+      parameters:
+        - in: path
+          name: territorioCodigo
+          required: true
+          description: Código de territorio para filtrar hoteles
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Hoteles encontrados por código de territorio
+        '404':
+          description: No se encontraron hoteles para el código de territorio especificado
+        '500':
+          description: Error en el servidor
+
+  /hotels/add:
+    post:
+      summary: Añadir un nuevo hotel
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Nombre: 
+                  type: string
+                  description: Nombre del hotel
+                Descripcion:
+                  type: string
+                  description: Descripción del hotel
+                Direccion:
+                  type: string
+                  description: Dirección del hotel
+                Estrellas:
+                  type: integer
+                  description: Categoría del hotel en estrellas
+                CodigoPostal:
+                  type: string
+                  description: Código postal del hotel
+                Municipio:
+                  type: string
+                  description: Municipio del hotel
+                CodigoMunicipio:
+                  type: string
+                  description: Código del municipio del hotel
+                Territorio:
+                  type: string
+                  description: Territorio del hotel
+                CodigoTerritorio:
+                  type: string
+                  description: Código del territorio del hotel
+      responses:
+        '201':
+          description: Hotel añadido con éxito
+        '500':
+          description: Error en el servidor
+
+  /hotels/{hotelId}/update:
+    put:
+      summary: Modificar los datos de un hotel existente
+      parameters:
+        - in: path
+          name: hotelId
+          required: true
+          description: ID del hotel que se desea modificar
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Nombre:
+                  type: string
+                  description: Nuevo nombre del hotel (opcional)
+                Descripcion:
+                  type: string
+                  description: Nueva descripción del hotel (opcional)
+                Estrellas:
+                  type: integer
+                  description: Nueva categoría del hotel en estrellas (opcional)
+                CodigoPostal:
+                  type: string
+                  description: Nuevo código postal del hotel (opcional)
+                Municipio:
+                  type: string
+                  description: Nuevo municipio del hotel (opcional)
+                CodigoMunicipio:
+                  type: string
+                  description: Nuevo código del municipio del hotel (opcional)
+                Territorio:
+                  type: string
+                  description: Nuevo territorio del hotel (opcional)
+                CodigoTerritorio:
+                  type: string
+                  description: Nuevo código del territorio del hotel (opcional)
+      responses:
+        '200':
+          description: Datos del hotel modificados con éxito
+        '404':
+          description: Hotel no encontrado
+        '500':
+          description: Error en el servidor
+
+  /hotels/municipios:
+    get:
+      summary: Obtener la lista de municipios únicos
+      responses:
+        '200':
+          description: Lista de municipios obtenida con éxito
+        '500':
+          description: Error en el servidor
+          
+  /hotels/territorios:
+    get:
+      summary: Obtener la lista de territorios únicos
+      responses:
+        '200':
+          description: Lista de territorios obtenida con éxito
+        '500':
+          description: Error en el servidor
+  
+  /hotels/municipio/{municipioNombre}:
+    get:
+      summary: Consultar hoteles por nombre de municipio
+      parameters:
+        - in: path
+          name: municipioNombre
+          required: true
+          description: Nombre del municipio para filtrar hoteles
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Hoteles encontrados por nombre de municipio
+        '404':
+          description: No se encontraron hoteles para el nombre de municipio especificado
+        '500':
+          description: Error en el servidor
+  
+  /hotels/territorio/{territorioNombre}:
+    get:
+      summary: Consultar hoteles por nombre de territorio
+      parameters:
+        - in: path
+          name: territorioNombre
+          required: true
+          description: Nombre del territorio para filtrar hoteles
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Hoteles encontrados por nombre de territorio
+        '404':
+          description: No se encontraron hoteles para el nombre de territorio especificado
+        '500':
+          description: Error en el servidor
