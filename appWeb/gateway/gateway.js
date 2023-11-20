@@ -1,5 +1,6 @@
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
+const cors = require('cors');
 
 // Crear la aplicación Express
 const app = express();
@@ -23,6 +24,10 @@ const pythonServiceProxy = createProxyMiddleware({
 // Redirigir las solicitudes a los microservicios correspondientes
 app.use('/node-service', nodeServiceProxy);
 app.use('/python-service', pythonServiceProxy);
+
+// Habilitar CORS para todas las rutas
+app.use(cors());
+
 
 // Iniciar el servidor en el puerto 8080
 const PORT = 8080;
