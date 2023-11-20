@@ -16,7 +16,7 @@
 
 
 <h1>Reseñas del Hotel <span id="hotel-name"></span></h1>
-<button id="review-button">Dejar reseña</button>
+
 
 <div class="review-form hidden">
     <h2>Escribir una reseña</h2>
@@ -165,9 +165,7 @@ function cargarReseñas(hotelId) {
     });
 }
 
-document.getElementById('review-button').addEventListener('click', function() {
-    document.querySelector('.review-form').classList.toggle('hidden');
-});
+
 
 document.getElementById('review-form').addEventListener('submit', function(event) {
     event.preventDefault();
