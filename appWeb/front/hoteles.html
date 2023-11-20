@@ -2,29 +2,22 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Hoteles del Municipio</title>
-    <style>
-        /* Estilos básicos */
-        body { font-family: Arial, sans-serif; }
-        .hotel {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-        .hotel h2 { margin: 0 0 10px 0; }
-        .hotel p { margin: 4px 0; }
-        .hotel a { text-decoration: none; color: blue; }
-        .hotel a:hover { text-decoration: underline; }
-    </style>
+    <title>HotelXplorer - Lista de Hoteles</title>
+    <!-- Enlazar con la hoja de estilos común -->
+    <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
+    <!-- Barra de navegación -->
+    <nav>
+        <span>HotelXplorer</span>
+        <a href="municipios.html">Volver al inicio</a>
+    </nav>
 
-<h1>Hoteles en <span id="nombre-municipio"></span></h1>
-<div id="lista-hoteles">
-  <!-- Los hoteles se cargarán aquí mediante JavaScript -->
-</div>
-
+    <!-- Contenido principal -->
+    <h1>Hoteles en <span id="nombre-municipio">Nombre del Municipio</span></h1>
+    <div id="lista-hoteles">
+      <!-- Los hoteles se cargarán aquí mediante JavaScript -->
+    </div>
 <script>
 // Función para cargar los hoteles del municipio y añadirlos al DOM
 function cargarHoteles() {
@@ -46,7 +39,7 @@ function cargarHoteles() {
           const hotelDiv = document.createElement('div');
           hotelDiv.className = 'hotel';
           hotelDiv.innerHTML = `
-            <h2><a href="reseñas.html?hotel_id=${encodeURIComponent(hotel.ID)}">${hotel.Nombre}</a></h2>
+            <h2><a href="reseñas.html?hotel_id=${hotel.ID}">${hotel.Nombre}</a></h2>
             <p><strong>Descripción:</strong> ${hotel.Descripcion}</p>
             <p><strong>Dirección:</strong> ${hotel.Direccion}</p>
             <p><strong>Estrellas:</strong> ${hotel.Estrellas}</p>

@@ -1,29 +1,19 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Reseñas del Hotel</title>
-    <style>
-        /* Estilos básicos */
-        body { font-family: Arial, sans-serif; }
-        .review, .review-form {
-            margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        }
-        .no-reviews {
-            color: #888;
-        }
-        .hidden {
-            display: none;
-        }
-        button {
-            margin: 10px 0;
-        }
-    </style>
-</head>
+    <head>
+        <meta charset="UTF-8">
+        <title>HotelXplorer - Reseñas del Hotel</title>
+        <!-- Enlazar con la hoja de estilos común -->
+        <link rel="stylesheet" href="estilos.css">
+    </head>
 <body>
+<!-- Barra de navegación -->
+<nav>
+    <span>HotelXplorer</span>
+    <a href="municipios.html">Volver al inicio</a>
+    <!-- Aquí puedes añadir más enlaces si es necesario -->
+</nav>
+
 
 <h1>Reseñas del Hotel <span id="hotel-name"></span></h1>
 <button id="review-button">Dejar reseña</button>
@@ -79,7 +69,7 @@ function enviarReseña(token, content, rating, hotelId) {
 
     console.log("Cabeceras:", headers.get('Authorization')); // Verifica que la cabecera de autorización se muestre correctamente
 
-    return fetch('http://localhost:8080/python-service/reviews', {
+    return fetch('http://localhost:8080/python-service/reviews/', {
         method: 'POST',
         headers: headers,
         body: JSON.stringify({ content, rating, hotel_id: hotelId })
@@ -107,26 +97,71 @@ function mostrarReseñas(reseñas) {
         return;
     }
 
-    reseñas.forEach(reseña => {
-        const reviewElement = document.createElement('div');
-        reviewElement.className = 'review';
-        reviewElement.innerHTML = `
-            <p>Contenido: ${reseña.content}</p>
-            <p>Calificación: ${reseña.rating}</p>
-            <!-- Aquí iría el código para incluir el nombre de usuario -->
-        `;
-        listaReseñas.appendChild(reviewElement);
+    // Crear una promesa para cada reseña que obtiene el nombre de usuario
+    const reseñasConUsuarios = reseñas.map(reseña => {
+        // Sustituye la URL por la que corresponda para obtener el nombre de usuario usando el `author_id`
+        return fetch(`http://localhost:8000/users/${reseña.author_id}`)
+            .then(response => {
+                if (!response.ok) throw new Error('Fallo al obtener el nombre de usuario');
+                return response.json();
+            })
+            .then(usuario => {
+                // Crear el elemento de la reseña con el nombre de usuario incluido
+                const reviewElement = document.createElement('div');
+                reviewElement.className = 'review';
+                reviewElement.innerHTML = `
+                    <p>Usuario: ${usuario.username}</p>
+                    <p>Contenido: ${reseña.content}</p>
+                    <p>Calificación: ${reseña.rating}</p>
+                `;
+                return reviewElement;
+            });
+    });
+
+    // Esperar a que todas las promesas se resuelvan antes de añadir las reseñas al DOM
+    Promise.all(reseñasConUsuarios)
+        .then(elements => {
+            elements.forEach(element => listaReseñas.appendChild(element));
+        })
+        .catch(error => {
+            console.error('Error al cargar usuarios de las reseñas:', error);
+            listaReseñas.innerHTML = '<div class="no-reviews">Error al cargar los nombres de usuarios.</div>';
+        });
+}
+
+function obtenerNombreDelHotel(hotelId) {
+    // Asegúrate de que la URL coincida con la estructura de tu API para obtener los detalles del hotel.
+    fetch(`http://localhost:8080/node-service/hotels/${encodeURIComponent(hotelId)}/details`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error en la respuesta de la API: ${response.statusText}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Asegúrate de que "Nombre" sea la propiedad correcta que contiene el nombre del hotel en la respuesta de tu API.
+        document.getElementById('hotel-name').textContent = `${data.Nombre}`;
+    })
+    .catch(error => {
+        console.error('Error al obtener el nombre del hotel:', error);
+        document.getElementById('hotel-name').textContent = ' Nombre no disponible';
     });
 }
 
-function cargarReseñas() {
-    const hotelId = new URLSearchParams(window.location.search).get('hotel_id');
-    document.getElementById('hotel-name').textContent = `ID: ${hotelId}`;
+function cargarReseñas(hotelId) {
     fetch(`http://localhost:8080/python-service/reviews/hotel/${encodeURIComponent(hotelId)}`)
-    .then(response => response.json())
-    .then(mostrarReseñas)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Problema al obtener las reseñas.');
+        }
+        return response.json();
+    })
+    .then(reseñas => {
+        mostrarReseñas(reseñas);
+    })
     .catch(error => {
         console.error('Error al cargar reseñas:', error);
+        document.getElementById('lista-reseñas').innerHTML = '<div class="no-reviews">No se pudieron cargar las reseñas.</div>';
     });
 }
 
@@ -155,7 +190,20 @@ document.getElementById('review-form').addEventListener('submit', function(event
     });
 });
 
-document.addEventListener('DOMContentLoaded', cargarReseñas);
+document.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const hotelId = urlParams.get('hotel_id');
+    if (hotelId) {
+        obtenerNombreDelHotel(hotelId); // Esto obtiene y muestra el nombre del hotel
+        cargarReseñas(hotelId); // Esto cargará y mostrará las reseñas
+    } else {
+        document.getElementById('hotel-name').textContent = 'ID de hotel no especificado';
+        document.getElementById('lista-reseñas').innerHTML = '<div class="no-reviews">No se especificó el hotel para cargar reseñas.</div>';
+    }
+});
+
+
+
 </script>
 
 </body>
