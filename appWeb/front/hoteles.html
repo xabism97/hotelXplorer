@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Hoteles del Municipio</title>
+    <style>
+        /* Estilos básicos */
+        body { font-family: Arial, sans-serif; }
+        .hotel {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .hotel h2 { margin: 0 0 10px 0; }
+        .hotel p { margin: 4px 0; }
+    </style>
+</head>
+<body>
+
+<h1>Hoteles en <span id="nombre-municipio"></span></h1>
+<div id="lista-hoteles">
+  <!-- Los hoteles se cargarán aquí mediante JavaScript -->
+</div>
+
+<script>
+// Función para cargar los hoteles del municipio y añadirlos al DOM
+function cargarHoteles() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const municipioNombre = urlParams.get('municipio'); // Obtiene el nombre del municipio de la URL
+
+  if (municipioNombre) {
+    document.getElementById('nombre-municipio').textContent = municipioNombre;
+
+    fetch(`http://localhost:8080/node-service/hotels/municipio/${encodeURIComponent(municipioNombre)}`)
+      .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+      })
+      .then(hoteles => {
+        const listaHoteles = document.getElementById('lista-hoteles');
+        listaHoteles.innerHTML = ''; // Limpiar la lista anterior
+        hoteles.forEach(hotel => {
+          const hotelDiv = document.createElement('div');
+          hotelDiv.className = 'hotel';
+          hotelDiv.innerHTML = `
+            <h2>${hotel.Nombre}</h2>
+            <p><strong>Descripción:</strong> ${hotel.Descripcion}</p>
+            <p><strong>Dirección:</strong> ${hotel.Direccion}</p>
+            <p><strong>Estrellas:</strong> ${hotel.Estrellas}</p>
+            <p><strong>Precio:</strong> ${hotel.Precio}</p>
+            <p><strong>Habitaciones:</strong> ${hotel.Habitaciones}</p>
+          `;
+          listaHoteles.appendChild(hotelDiv);
+        });
+      })
+      .catch(error => {
+        console.error('Error al cargar hoteles:', error);
+      });
+  } else {
+    document.getElementById('nombre-municipio').textContent = 'No especificado';
+    document.getElementById('lista-hoteles').textContent = 'No hay hoteles disponibles para mostrar.';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', cargarHoteles);
+</script>
+
+</body>
+</html>
