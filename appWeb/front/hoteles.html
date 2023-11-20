@@ -14,6 +14,8 @@
         }
         .hotel h2 { margin: 0 0 10px 0; }
         .hotel p { margin: 4px 0; }
+        .hotel a { text-decoration: none; color: blue; }
+        .hotel a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -44,7 +46,7 @@ function cargarHoteles() {
           const hotelDiv = document.createElement('div');
           hotelDiv.className = 'hotel';
           hotelDiv.innerHTML = `
-            <h2>${hotel.Nombre}</h2>
+            <h2><a href="reseñas.html?hotel_id=${encodeURIComponent(hotel.ID)}">${hotel.Nombre}</a></h2>
             <p><strong>Descripción:</strong> ${hotel.Descripcion}</p>
             <p><strong>Dirección:</strong> ${hotel.Direccion}</p>
             <p><strong>Estrellas:</strong> ${hotel.Estrellas}</p>
