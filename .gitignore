@@ -1,4 +1,5 @@
 hotelXplorer/appWeb/fastapi/virtual/
+hotelXplorer/appWeb/fastapi/__pycache__/
 
 hotelXplorer/appWeb/node/data/
 
@@ -7,18 +8,23 @@ hotelXplorer/appWeb/node/node-modules/
 
 hotelXplorer/appWeb/fastapi/virtual
 
+hotelXplorer/appWeb/fastapi/__pycache__
+
 hotelXplorer/appWeb/node/data
 
 hotelXplorer/appWeb/node/node-modules
 
 appWeb/fastapi/virtual/
+appWeb/fastapi/__pycache__/
 
 appWeb/node/data/
 
 appWeb/node/node-modules/
 
 appWeb/fastapi/virtual
+appWeb/fastapi/__pycache__
 
 appWeb/node/data
 
 appWeb/node/node-modules
+appWeb/fastapi/__pycache__/main.cpython-312.pyc

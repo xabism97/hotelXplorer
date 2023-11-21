@@ -31,6 +31,80 @@ nav a {
 nav a:hover {
     background-color: #003d82;
 }
+form {
+    background: #fff;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+main {
+    flex: 1;
+    width: 100%;
+    max-width: 600px; /* Ancho máximo del formulario */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+form {
+    background: #fff;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+button {
+    width: calc(100% - 20px); /* 100% del ancho del formulario menos el padding */
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #4cae4c;
+}
+
+/* Estilo para mensajes de error o confirmación */
+.message {
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+    border-radius: 4px;
+    color: white;
+}
+
+.error {
+    background-color: #d9534f;
+}
+
+.success {
+    background-color: #5cb85c;
+}
+
 
 @media (max-width: 600px) {
     nav {
@@ -48,6 +122,7 @@ nav a:hover {
     border-radius: 5px;
     background-color: #f9f9f9;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    
 }
 
 .review h3 {
@@ -71,6 +146,8 @@ nav a:hover {
     font-size: 14px;
     line-height: 1.6;
     color: #333;
+    
+    
 }
 
 /* Estilo para la calificación */
@@ -185,3 +262,20 @@ nav a:hover {
     font-weight: bold;
     color: #2ecc71;
 }
+
+textarea#content {
+    width: 100%;       /* Ancho al 100% del contenedor padre */
+    height: 150px;     /* Alto fijo */
+    margin: 0 auto;    /* Centrado horizontal */
+    display: block;    /* Para aplicar margen automático */
+    padding: 10px;     /* Espacio interno para no pegar el texto a los bordes */
+    resize: vertical;  /* Permite al usuario cambiar el tamaño verticalmente */
+  }
+
+  /* Centrar el input de clasificación */
+input#rating {
+    display: block; /* Convierte el input en un bloque para poder aplicar margen automático */
+    margin: 0 auto; /* Margen automático para centrar */
+    width: 50%; /* Ancho del input según prefieras */
+  }
+  
