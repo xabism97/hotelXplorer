@@ -1,7 +1,7 @@
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const cors = require('cors');
-
+const path = require('path');
 // Crear la aplicación Express
 const app = express();
 
@@ -12,7 +12,13 @@ const nodeServiceProxy = createProxyMiddleware({
   pathRewrite: { '^/node-service': '' }, // Reescribe las rutas si es necesario
 });
 
+// Sirve los archivos estáticos de la carpeta 'public'
+app.use(express.static('public'));
 
+// Aquí 'public' es el nombre de tu carpeta donde está index.html
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 // Configurar el proxy para el microservicio de Python (main.py)
 const pythonServiceProxy = createProxyMiddleware({

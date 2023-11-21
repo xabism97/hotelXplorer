@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>HotelXplorer - Lista de Municipios</title>
+    <!-- Añadir referencias a CSS aquí. Por ejemplo: -->
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <nav>
+        <span>HotelXplorer</span>
+        <a href="index.html">Volver al inicio</a>
+        <a href="registro.html">Registrarse</a>
+    </nav>
+
+    <h1>Seleccione un municipio</h1>
+    <ul id="lista-municipios">
+      <!-- Los municipios se cargarán aquí mediante JavaScript -->
+    </ul>
+
+    
+
+
+<script>
+// Función para cargar la lista de municipios y añadirlos al DOM
+function cargarMunicipios() {
+    fetch('http://localhost:8080/node-service/hotels/municipios')
+    .then(response => {
+        if (!response.ok) throw new Error('Network response was not ok');
+        return response.json();
+    })
+    .then(municipios => {
+        const listaMunicipios = document.getElementById('lista-municipios');
+        municipios.forEach(nombreMunicipio => {
+            const elementoLista = document.createElement('li');
+            const enlaceMunicipio = document.createElement('a');
+            enlaceMunicipio.href = `hoteles.html?municipio=${encodeURIComponent(nombreMunicipio)}`;
+            enlaceMunicipio.textContent = nombreMunicipio;
+            elementoLista.appendChild(enlaceMunicipio);
+            listaMunicipios.appendChild(elementoLista);
+        });
+    })
+    .catch(error => {
+        console.error('Error al cargar municipios:', error);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', cargarMunicipios);
+</script>
+
+</body>
+</html>
