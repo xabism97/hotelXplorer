@@ -29,28 +29,49 @@
         <input type="submit" value="Registrar">
     </form>
 
-    
-    <script>
-        document.getElementById('userForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const formData = {
-                username: document.getElementById('username').value,
-                email: document.getElementById('email').value,
-                password: document.getElementById('password').value,
-            };
 
-            fetch('http://localhost:8080/python-service/users/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            })
-            .then(response => response.json())
-            .then(data => console.log('Success:', data))
-            .catch((error) => console.error('Error:', error));
+
+
+
+<script>
+    document.getElementById('userForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        
+        const formData = {
+            username: document.getElementById('username').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+        };
+
+        fetch('http://localhost:8080/python-service/users/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            } else {
+                return response.json();
+            }
+        })
+        .then(data => {
+            console.log('Success:', data);
+            alert('Usuario registrado con éxito.');
+            // Clear the form fields after successful registration
+            document.getElementById('username').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('password').value = '';
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('Error al registrar el usuario.');
         });
-    </script>
+    });
+</script>
+
+  
 </body>
 </html>

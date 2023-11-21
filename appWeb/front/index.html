@@ -15,6 +15,8 @@
     </nav>
 
     <h1>Seleccione un municipio</h1>
+    <button id="descargar-hoteles">Descargar Hoteles</button>
+
     <ul id="lista-municipios">
       <!-- Los municipios se cargarán aquí mediante JavaScript -->
     </ul>
@@ -24,6 +26,22 @@
 
 <script>
 // Función para cargar la lista de municipios y añadirlos al DOM
+function descargarHoteles() {
+    fetch('http://localhost:8080/node-service/hotels/data-refresh')
+    .then(response => {
+        if (!response.ok) throw new Error('No se pudo descargar los datos de los hoteles');
+        return response.json();
+    })
+    .then(resultado => {
+        alert('Datos de hoteles almacenados con éxito');
+        // Aquí puedes realizar más acciones después de la descarga exitosa
+    })
+    .catch(error => {
+        console.error('Error al descargar datos de hoteles:', error);
+        alert('Error al descargar los datos de los hoteles');
+    });
+}
+
 function cargarMunicipios() {
     fetch('http://localhost:8080/node-service/hotels/municipios')
     .then(response => {
@@ -47,6 +65,7 @@ function cargarMunicipios() {
 }
 
 document.addEventListener('DOMContentLoaded', cargarMunicipios);
+document.getElementById('descargar-hoteles').addEventListener('click', descargarHoteles);
 </script>
 
 </body>
