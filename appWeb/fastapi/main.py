@@ -16,6 +16,7 @@ import logging
 from fastapi.middleware.cors import CORSMiddleware
 
 
+
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -27,6 +28,8 @@ ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+
 
 Base = declarative_base()
 
@@ -213,7 +216,7 @@ async def create_review(
         logger.debug(f"Token: {token}")
         logger.debug(f"Author ID: {author_id}")
 
-        # Resto de la lógica aquí...
+       
 
     except JWTError as e:
         # Agregar registro de depuración en caso de error de decodificación del token
@@ -286,7 +289,7 @@ async def read_user(user_id: int, db: Session = Depends(get_db)):
     return db_user
 
 
-# Más rutas y lógica según tus requerimientos...
+
 
 
 # Ejecutar con: uvicorn main:app --reload --port 8000

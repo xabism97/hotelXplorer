@@ -6,3 +6,4 @@ sqlalchemy
 uvicorn
 pymysql
 python-multipart
+sqlalchemy-utils
