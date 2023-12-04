@@ -9,6 +9,7 @@
   "version": "1.0.0",
   "main": "gateway.js",
   "scripts": {
+    "prestart": "npm install",
     "start": "node gateway.js"
   },
   "author": "Xabi",
