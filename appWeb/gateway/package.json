@@ -8,7 +8,6 @@
   "description": "npm install express cors http-proxy-middleware",
   "version": "1.0.0",
   "main": "gateway.js",
-  "devDependencies": {},
   "scripts": {
     "start": "node gateway.js"
   },
