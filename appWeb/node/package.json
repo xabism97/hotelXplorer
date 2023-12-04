@@ -2,10 +2,10 @@
   "name": "api-de-hoteles",
   "version": "1.0.0",
   "description": "API REST para gestionar datos de hoteles en Euskadi",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "prestart": "npm install",
-    "start": "node index.js"
+    "start": "node app.js"
   },
   "keywords": [
     "openapi-generator",
