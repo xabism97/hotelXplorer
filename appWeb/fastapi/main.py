@@ -145,7 +145,7 @@ def get_db():
         db.close()
 
 # Rutas para el microservicio
-@app.post("/token", response_model=Token)
+@app.post("/token", response_model=Token, tags={'users'})
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = authenticate_user(db, form_data.username, form_data.password)
     if not user:
@@ -158,7 +158,7 @@ async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends(
     access_token = create_access_token(data={"sub": user.id}, expires_delta=access_token_expires)
     return {"access_token": access_token, "token_type": "bearer"}
 
-@app.post("/users/", response_model=UserInDB)
+@app.post("/users/", response_model=UserInDB, tags={'users'})
 async def create_user(user: UserCreate, db: Session = Depends(get_db)):
     db_user = get_user(db, username=user.username)
     if db_user:
@@ -173,7 +173,7 @@ async def create_user(user: UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=str(e))
     return db_user
 
-@app.get("/users/{user_id}", response_model=UserInDB)
+@app.get("/users/{user_id}", response_model=UserInDB, tags={'users'})
 async def read_user(user_id: int, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.id == user_id).first()
     if db_user is None:
@@ -195,7 +195,7 @@ def get_current_user(db: Session = Depends(get_db), token: str = Depends(oauth2_
         raise HTTPException(status_code=401, detail="Invalid JWT token")
 
 
-@app.post("/reviews/", response_model=ReviewOut)
+@app.post("/reviews/", response_model=ReviewOut, tags={'reviews'})
 async def create_review(
     review: ReviewCreate, 
     db: Session = Depends(get_db), 
@@ -250,13 +250,13 @@ async def create_review(review: ReviewCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail=str(e))
     return db_review  '''
 
-@app.get("/reviews/", response_model=List[ReviewOut])
+@app.get("/reviews/", response_model=List[ReviewOut], tags={'reviews'})
 async def read_reviews(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     reviews = db.query(Review).offset(skip).limit(limit).all()
     return reviews
 
 # Ruta para obtener todas las reseñas asociadas a un hotel
-@app.get("/reviews/hotel/{hotel_id}", response_model=List[ReviewOut])
+@app.get("/reviews/hotel/{hotel_id}", response_model=List[ReviewOut], tags={'reviews'})
 async def get_reviews_by_hotel(hotel_id: int, db: Session = Depends(get_db)):
     reviews = db.query(Review).filter(Review.hotel_id == hotel_id).all()
     if not reviews:
@@ -264,14 +264,14 @@ async def get_reviews_by_hotel(hotel_id: int, db: Session = Depends(get_db)):
     return reviews
 
 # Ruta para obtener el perfil del usuario logueado
-@app.get("/users/me/data", response_model=UserInDB)
+@app.get("/users/me/data", response_model=UserInDB, tags={'users'})
 async def read_users_me(current_user: User = Security(get_current_user)):
     """
     Retorna los datos del usuario actualmente logueado.
     """
     return current_user
 
-@app.get("/users/{user_id}/username", response_model=UserNameOut)
+@app.get("/users/{user_id}/username", response_model=UserNameOut, tags={'users'})
 async def get_username_by_user_id(user_id: int, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.id == user_id).first()
     if db_user is None:
@@ -281,7 +281,7 @@ async def get_username_by_user_id(user_id: int, db: Session = Depends(get_db)):
 
 
 # Asegúrate de que esta ruta esté después de la ruta '/users/me' para evitar conflictos
-@app.get("/users/{user_id}", response_model=UserInDB)
+@app.get("/users/{user_id}", response_model=UserInDB, tags={'users'})
 async def read_user(user_id: int, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.id == user_id).first()
     if db_user is None:
