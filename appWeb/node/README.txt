@@ -1,8 +1,6 @@
 
 
-iniciar servidor mongodb
-	- mongod -dbpath data\db
+en el cmd:
 
-
-en el cmd
+	mongod -dbpath data\db
 	npm start
