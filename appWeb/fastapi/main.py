@@ -280,7 +280,6 @@ async def get_username_by_user_id(user_id: int, db: Session = Depends(get_db)):
 
 
 
-# Asegúrate de que esta ruta esté después de la ruta '/users/me' para evitar conflictos
 @app.get("/users/{user_id}", response_model=UserInDB, tags={'users'})
 async def read_user(user_id: int, db: Session = Depends(get_db)):
     db_user = db.query(User).filter(User.id == user_id).first()

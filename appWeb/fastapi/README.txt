@@ -1,3 +1,5 @@
+en el cmd:
+
 
 python -m venv virtual
 virtual\Scripts\activate

@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 
 const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs'); // Asegúrate de que este módulo esté instalado
+const YAML = require('yamljs'); 
 
 const cors = require('cors');
 

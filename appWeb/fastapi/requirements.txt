@@ -8,3 +8,4 @@ pymysql
 python-multipart
 sqlalchemy-utils
 bcrypt
+cryptography

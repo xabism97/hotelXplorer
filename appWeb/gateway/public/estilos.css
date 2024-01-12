@@ -4,6 +4,10 @@ body {
     background: #f7f7f7;
     padding: 20px;
     margin: 0;
+    background-image: url('static/fondo.jpg'); 
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed; 
 }
 
 nav {
@@ -185,19 +189,32 @@ button:hover {
 
 /* Estilos para la lista de municipios */
 #lista-municipios {
-    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
     padding: 0;
+    margin: 0;
+    list-style-type: none;
 }
 
 #lista-municipios li {
-    background: white;
-    margin-bottom: 8px;
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    transition: transform 0.2s;
+    flex: 0 0 calc(16.66% - 10px); /* Ancho para 6 elementos por fila, ajustando el margen */
+    margin: 5px; /* Margen alrededor de las cajas */
+    background: white; /* Color de fondo */
+    border: 1px solid #ccc; /* Estilo de borde */
+    border-radius: 10px; /* Bordes redondeados */
+    padding: 5px; /* Relleno dentro de las cajas */
+    box-sizing: border-box;
+    height: 80px; /* Altura de las cajas */
+    overflow: hidden; /* Asegura que el contenido no desborde */
+    text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es demasiado largo */
+    white-space: nowrap; /* Impide que los textos se pasen a una nueva línea dentro de la caja */
+    display: flex; /* Habilita flexbox para los contenidos de la caja */
+    align-items: center; /* Centra el texto verticalmente */
+    justify-content: center; /* Centra el texto horizontalmente */
+    font-size: 1.2em; /* Aumenta el tamaño del texto */
+    text-align: center; /* Asegura que el texto se centre aunque no sea un solo línea */
 }
-
 #lista-municipios li a {
     text-decoration: none;
     color: #333;

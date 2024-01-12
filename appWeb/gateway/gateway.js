@@ -7,9 +7,9 @@ const app = express();
 
 // Configurar el proxy para el microservicio de Node.js (app.js)
 const nodeServiceProxy = createProxyMiddleware({
-  target: 'http://localhost:3000', // Asume que este es el puerto donde se ejecuta tu microservicio Node.js
+  target: 'http://localhost:3000', // Asume que este es el puerto donde se ejecuta el microservicio Node.js
   changeOrigin: true,
-  pathRewrite: { '^/node-service': '' }, // Reescribe las rutas si es necesario
+  pathRewrite: { '^/node-service': '' }, // Reescribe las rutas 
 });
 
 // Sirve los archivos estáticos de la carpeta 'public'
@@ -22,9 +22,9 @@ app.get('/', (req, res) => {
 
 // Configurar el proxy para el microservicio de Python (main.py)
 const pythonServiceProxy = createProxyMiddleware({
-  target: 'http://localhost:8000', // Asume que este es el puerto donde se ejecuta tu microservicio Python
+  target: 'http://localhost:8000', // Asume que este es el puerto donde se ejecuta el microservicio Python
   changeOrigin: true,
-  pathRewrite: { '^/python-service': '' }, // Reescribe las rutas si es necesario
+  pathRewrite: { '^/python-service': '' }, // Reescribe las rutas 
 });
 
 // Redirigir las solicitudes a los microservicios correspondientes
